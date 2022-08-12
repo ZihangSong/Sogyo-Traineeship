@@ -1,0 +1,163 @@
+from tkinter import *
+import random
+"""In deze script wordt er gebruik gemaakt van tkinter waarbij een aparte pop-up window verschijnt voor de tic-tac-toe game.
+De gameboard heeft 9 buttons waar spelers om de beurt hun zet maken. Bovenaan wordt weergegeven of het de beurt van 'O' of 'X' is.
+Wanneer de spel eindigt, is er de optie om op restart button te drukken. Spelboord wordt dan gewist en een nieuwe ronde kan worden gespeeld.
+"""
+
+"""Functie volgende beurt definieren. Global scope player gerefereerd zodat de huidige player/beurt bepaald kan worden.
+Eerst wordt er gekeken of er een button/spelveld leeg is EN of iemand de winconditie nog NIET heeft voldaan.
+    Wanneer beide niet waar is, wordt de volgende geclickte button gelabeld met de huidige label.
+        Na deze zet wordt nog eens gekeken of er een winner is. Wanneer dit niet waar is, wordt de label bovenaan gewijzigd met de ander speler zijn beurt.
+        Wanneer dit wel waar is, wordt de label bovenaan gewijzigd met dat de huidige speler gewonnen heeft.
+        Wanneer winconditie de uitslag gelijkspel geeft, wordt het veranderd naar Gelijkspel! Nog eens proberen?
+    Dit bovenstaande moet voor veide spelers in players[0,1] gelden. Dus het wordt twee keer in de code gezet met een if-else conditie zodat het voor beide spelers wordt uitgevoerd.
+"""
+def next_turn(row, column):
+    global player
+    if buttons[row][column]['text'] == "" and check_winner() is False:
+        if player == players[0]:
+            buttons[row][column]['text'] = player
+            if check_winner() is False:
+                player = players[1]
+                label.config(text=(players[1]+"'s turn"))
+            elif check_winner() is True:
+                label.config(text=(players[0]+" wins!"))
+            elif check_winner() == "Tie":
+                label.config(text="Tie! Try again?")
+        else:
+            buttons[row][column]['text'] = player
+            if check_winner() is False:
+                player = players[0]
+                label.config(text=(players[0]+"'s turn"))
+            elif check_winner() is True:
+                label.config(text=(players[1]+" wins!"))
+            elif check_winner() == "Tie":
+                label.config(text="Tie! Try again?")
+
+def check_winner():
+    """
+    Definitie geven aan winconditie.
+    Als eerst wordt er voor de kolommen gekeken. Wanneer de text/speler symbol in rij 1 == rij 2 == rij 3 dan is er verticaal 3 op een rij.
+    Deze buttons wordt dan groen gemarkeerd en de functie check_winner geeft de boolean waar terug.
+    """
+    for row in range(3):
+        if buttons[row][0]['text'] == buttons[row][1]['text'] == buttons[row][2]['text'] != "":
+            buttons[row][0].config(bg="green")
+            buttons[row][1].config(bg="green")
+            buttons[row][2].config(bg="green")
+            return True
+    """
+    Hier wordt gekeken voor de rijen. Wanneer de text/speler symbol in kolom 1 == kolom 2 == kolom 3 dan is er horizontaal 3 op een rij.
+    Deze buttons wordt dan groen gemarkeerd en de functie check_winner geeft de boolean waar terug.
+    """
+    for column in range(3):
+        if buttons[0][column]['text'] == buttons[1][column]['text'] == buttons[2][column]['text'] != "":
+            buttons[0][column].config(bg="green")
+            buttons[1][column].config(bg="green")
+            buttons[2][column].config(bg="green")
+            return True
+    """
+    Hier wordt met wat meer moeite de winconditie gekeken van twee schuine mogelijkheden, omdat het niet mogelijk was om dit te generaliseren(misschien is er toch wel een functie hiervoor).
+    Beide coordinaten moet hier dan gebruikt worden om ze te checken.
+    [0.0], [0.1], [0.2],
+    [1.0], [1.1], [2.2],
+    [2.0], [1.1], [2.2],
+    Als er schuin 3 hetzelfde symbool/speler zijn dan worden deze buttons roen gemarkeerd en de functie check_winner geeft de boolean waar terug.
+    Wanneer alle bovenstaande win-condities niet worden voldaan, wordt er eerst gekeken of er nog lege velden zijn.
+        Als dit niet waar is/geen lege velden, dan worden alle rijen en kolommen geel gemaakt en de value "Tie" terug gegeven.
+        Wanneer dit wel waar is/wel lege velden, dan wordt er de boolean false teruggekoppeld aan de functie check_winner().
+    """
+    if buttons[0][0]['text'] == buttons[1][1]['text'] == buttons[2][2]['text'] != "":
+        buttons[0][0].config(bg="green")
+        buttons[1][1].config(bg="green")
+        buttons[2][2].config(bg="green")
+        return True
+    elif buttons[0][2]['text'] == buttons[1][1]['text'] == buttons[2][0]['text'] != "":
+        buttons[0][2].config(bg="green")
+        buttons[1][1].config(bg="green")
+        buttons[2][0].config(bg="green")
+        return True
+    elif empty_spaces() is False:
+        for row in range(3):
+            for column in range(3):
+                buttons[row][column].config(bg="yellow")
+        return "Tie"
+    else:
+        return False
+"""
+Hierbij wordt de functie lege velden gedefineerd om te kijken of er nog een zet mogelijk is/en of het gelijkspel wordt door geen mogelijk zet + geen win-con.
+spaces variable wordt eerst op 9 gezet. Daarna wordt er gekeken in de spelveld. Wanneer een veld niet meer leeg is, wordt de variabele spaces 1 minder.
+Wanneer spaces 0 bereikt/== 0 betekent dat alle velden bezet zijn. Hier wordt dan de boolean False terug gegeven op de functie van empty_spaces => geen lege velden meer.
+Als dit niet waar is != 0, dan is er nog een lege veld. True wordt dan teruggekoppeld  => er is nog een lege veld.
+"""
+def empty_spaces():
+    spaces = 9
+    for row in range(3):
+        for column in range(3):
+            if buttons[row][column]['text'] != "":
+                spaces -= 1
+    if spaces == 0:
+        return False
+    else:
+        return True
+"""
+
+"""
+def new_game():
+    global player
+    player = random.choice(players)
+    label.config(text=player+"'s turn")
+    for row in range(3):
+        for column in range(3):
+            buttons[row][column].config(text="",bg="#F0F0F0")
+
+print ("Hello, welcome to a game of Tic Tac Toe!" +
+       '\n' + "Tic-tac-toe is a game in which two players take turns in drawing either an ' O' or an ' X' in one square of a grid consisting of nine squares." +
+       '\n' + "The winner is the first player to get three of the same symbols in a row.")
+user_input = input("Please enter \"s\" to start:")
+
+"""
+Een begin screen gecreerd zodat de spel window niet meteen uit komt. Zal handig kunnen zijn wanneer meerdere opties toegevoegd moet worden (bijv. tegen AI, uitleg voor gecompliceerdere spellen, controls uitleg etc.
+"""
+def game_start(user_input):
+  if user_input.lower() == "s": 
+    print("Thanks for playing!")
+    return True
+  else: return False
+  
+"""
+Wanneer s input wordt gegeven, wordt functie game_start true en wordt het volgende uitgevoerd.
+een aparte window wordt gegenereerd met 9 buttons zoals weergegeven.
+Labels worden gebruikt om de beurt aan te geven.
+Een reset button werd toegevoegd en functie new_game wordt uitgevoerd wanneer er op gedrukt wordt -> opnieuw leeg boord.
+met frame.pack en button[row][column].grid wordt de buttons/velden daadwerkelijk gecreerd met style, grootte. Buttons is een 2d list dataset dus buttons[row][column].
+"""
+if game_start(user_input):
+    global player
+    players = ["X","O"]
+    player = random.choice(players)
+    window = Tk()
+    window.title("Tic-Tac-Toe")
+    buttons = [[0,0,0],
+                      [0,0,0],
+                       [0,0,0]]
+    label = Label(text=player + "'s turn", font=('arial',40))
+    label.pack(side="top")
+    reset_button = Button(text="Restart", font=('arial',20), command=new_game)
+    reset_button.pack(side="top")
+    frame = Frame(window)
+    frame.pack()
+    for row in range(3):
+        for column in range(3):
+            buttons[row][column] = Button(frame, text="",font=('consolas',40), width=5, height=2,
+                                          command= lambda row=row, column=column: next_turn(row,column))
+            buttons[row][column].grid(row=row,column=column)
+    window.mainloop()
+
+players = ["X","O"]
+player = random.choice(players)
+
+
+
+  
