@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="mancala.domain.MancalaTest" tests="46" skipped="0" failures="0" errors="0" timestamp="2022-09-23T09:10:46" hostname="HP400PD" time="0.139">
+  <properties/>
+  <testcase name="aPlayerCanAskWhetherHeHasWon()" classname="mancala.domain.MancalaTest" time="0.01"/>
+  <testcase name="aPlayerCanIdentifyItself()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="anInitializedNormalCupHas4Stones()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupHasItsOwnPlayer()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayersKalahaCanCheckAgainstOpponent()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupBelongsToAPlayer()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanBeMade()" classname="mancala.domain.MancalaTest" time="0.0"/>
+  <testcase name="theKalahacupOfAPlayerDoesNotHaveANeighbor()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanCompleteAStealActionInABigMove()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayerCanCreateHisSideOfBoard()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanPassItsStonesToItsNeighborAsFloatingStones()" classname="mancala.domain.MancalaTest" time="0.0"/>
+  <testcase name="aNormalCupHasAnotherCupAsNeighbor()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aSideIsEmptyAfterWholeSideMovedToKalaha()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCup0CanTellItsWholeSideToMoveTheirContentToTheKalaha()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aKalahaKnowsToNotTakeStonesFromOpponenetsMove()" classname="mancala.domain.MancalaTest" time="0.0"/>
+  <testcase name="anInitializedKalahaHas0Stones()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayersMoveCanBeValidatedOnCupContent()" classname="mancala.domain.MancalaTest" time="0.003"/>
+  <testcase name="aPlayerHasAKalahaOfTypeKalaha()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanMoveItsContentToTheKalahaAfterStealingFromOppositeNeighbor()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="aPlayerCanBeCreated()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aFullCorrectBoardIsCreatedAfterAGameHasBeenStarted()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayerCanCheckWhetherHisMoveChangedThings()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="aNormalCupCanBeMade()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="enemyBoardDoesNotAffectOwnSideZeroContentCheck()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="aCupCanChecksWhetherItsNeighborsContentAre0()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="KalahaCupOfAPlayerConsists0Stones()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanPassHisFloatToItsNeighbor()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayerCanMakeAnotherMoveIfHeLandsOnTheKalaha()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="aCupCanTakeOneFromItsFloatingStones()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayersMoveCanBeValidatedOnTurn()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="oppositeNeighborsAreLinkedWhen2BoardsAreGiven()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="whenAMoveLandsInOwnKalahaTheTurnIsNotSwitched()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupCanStealFromOppositeNeighbor()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="theKalahaHasTheCup0OfOppositePlayerAsNeighbor()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="eachNormalCupOfAPlayerHasANeighbor()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayerHasATurnOfBooleanTypeAndAGameStartsWithPlayer1sTurn()" classname="mancala.domain.MancalaTest" time="0.002"/>
+  <testcase name="aPlayersMoveDoesNotDoAnythingWhenItIsNotHisTurn()" classname="mancala.domain.MancalaTest" time="0.003"/>
+  <testcase name="aCupsFloatIsEmptyAfterPassingItThrough()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="eachNormalCupOfAPlayerHas4Stones()" classname="mancala.domain.MancalaTest" time="0.005"/>
+  <testcase name="aKalahaCanBeMade()" classname="mancala.domain.MancalaTest" time="0.003"/>
+  <testcase name="aCupCanEmptyItself()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayersTurnIsSwitchedToFalseAfterHeHasMadeAMoveAndOpponentTurnIsSwitchedToTrue()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="theKalahaStillDoesNotHaveAnOppositeNeighborAfterLinking2Players()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aCupKnowsHowTomakeACompleteMoveInAGameOf2()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="aPlayersTurnDoesNotSwitchUntilAValidMoveHasBeenMade()" classname="mancala.domain.MancalaTest" time="0.001"/>
+  <testcase name="theProgramTerminatesAfterASideIsEmpty()" classname="mancala.domain.MancalaTest" time="0.005"/>
+  <system-out><![CDATA[Game Ended!
+No i lost.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

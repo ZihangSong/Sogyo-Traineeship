@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Cup.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">domain</a> &gt; <a href="index.source.html" class="el_package">mancala.domain</a> &gt; <span class="el_source">Cup.java</span></div><h1>Cup.java</h1><pre class="source lang-java linenums">package mancala.domain;
+
+<span class="fc" id="L3">public class Cup {</span>
+    protected int stones;
+    protected int player;
+    protected int floatingstones;
+    protected Cup neighbor;
+<span class="fc" id="L8">    protected int totalAmountOfNormalCupsPerPlayer = 5;</span>
+    protected Cup oppositeneighbor;
+<span class="fc" id="L10">    protected boolean landedupon = false;</span>
+
+    public int getStones(){
+<span class="fc" id="L13">        return this.stones;</span>
+    }
+
+    public Cup getNeighbor(){
+<span class="fc" id="L17">        return this.neighbor;</span>
+    }
+
+    public Cup getCup(int CupNumber){
+<span class="fc bfc" id="L21" title="All 2 branches covered.">        if (CupNumber == 0){</span>
+<span class="fc" id="L22">            return this;</span>
+        }else{
+<span class="fc" id="L24">            return this.neighbor.getCup(CupNumber - 1);</span>
+        }
+    }
+
+    public int getFloatingstones(){
+<span class="fc" id="L29">        return this.floatingstones;</span>
+    }
+
+    public int getPlayer(){
+<span class="fc" id="L33">        return this.player;</span>
+    }
+
+    public void passStonesToNeighbor(){
+<span class="fc" id="L37">        Cup neighbor = this.neighbor;</span>
+<span class="fc" id="L38">        neighbor.floatingstones = this.stones;</span>
+<span class="fc" id="L39">    }</span>
+
+    public void emptySelf(){
+<span class="fc" id="L42">        this.stones = 0;</span>
+<span class="fc" id="L43">    }</span>
+
+    public void takeFromFloat(int playerside){
+<span class="fc" id="L46">        int originalstones = this.getStones();</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (this.floatingstones &gt; 0){</span>
+<span class="fc" id="L48">            this.stones++;</span>
+<span class="fc" id="L49">            this.floatingstones--;          </span>
+        }
+<span class="fc bfc" id="L51" title="All 4 branches covered.">        if (this.getFloatingstones() == 0 &amp;&amp; originalstones == 0){</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">            if (!opponentCheck(playerside)){</span>
+<span class="fc" id="L53">                this.stealFromOppositeNeighbor();</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">                if (!this.kalahaCheck()){</span>
+<span class="fc" id="L55">                    ((NormalCup) this).moveOwnContentToKalaha();</span>
+                }
+            }
+        }
+<span class="fc" id="L59">    }</span>
+
+    public boolean kalahaCheck(){
+<span class="fc" id="L62">        return false;</span>
+    }
+
+    public void passFloatThrough(){
+<span class="fc" id="L66">        Cup neighbor = this.getNeighbor();</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (this.floatingstones &gt; 0){</span>
+<span class="fc" id="L68">            neighbor.floatingstones = this.floatingstones;</span>
+<span class="fc" id="L69">            emptyOwnFloatingStones();</span>
+        }
+<span class="fc" id="L71">    }</span>
+
+    public void emptyOwnFloatingStones(){
+<span class="fc" id="L74">        this.floatingstones = 0;</span>
+<span class="fc" id="L75">    }</span>
+
+    public void linkOppositeNeighbors(Player OppositePlayer){
+<span class="fc" id="L78">        Cup player1cups = new Cup();</span>
+<span class="fc bfc" id="L79" title="All 2 branches covered.">        for (int i = 0; i &lt; 6; i++){</span>
+<span class="fc" id="L80">            int linktarget = 5 - i;</span>
+<span class="fc" id="L81">            player1cups = this.getCup(i);</span>
+<span class="fc" id="L82">            player1cups.oppositeneighbor = OppositePlayer.board.getCup(linktarget);</span>
+        }
+<span class="fc" id="L84">    }</span>
+
+    public Cup getOppositeNeighbor(){
+<span class="fc" id="L87">        return this.oppositeneighbor;</span>
+    }
+
+    public void linkKalahaToOppositeplayerCup0(Player OppositePlayer){
+<span class="fc" id="L91">        Cup player1Kalaha = new Cup();</span>
+<span class="fc" id="L92">        Cup player2Cup0 = new Cup();</span>
+<span class="fc" id="L93">        player1Kalaha = this.getCup(6);</span>
+<span class="fc" id="L94">        player2Cup0 = OppositePlayer.board.getCup(0);</span>
+<span class="fc" id="L95">        player1Kalaha.neighbor = player2Cup0;</span>
+<span class="fc" id="L96">    }</span>
+
+
+    public boolean moveContentValidity(){
+<span class="fc" id="L100">        int content = this.getStones();</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">        if (content &lt;= 0){</span>
+<span class="fc" id="L102">            return false;</span>
+        }else{
+<span class="fc" id="L104">            return true;</span>
+        }
+    }
+
+    public void passFloatWithoutTaking(){
+<span class="nc" id="L109">        this.neighbor.floatingstones = this.floatingstones;</span>
+<span class="nc" id="L110">        this.floatingstones = 0;</span>
+<span class="nc" id="L111">    }</span>
+
+    public boolean playerTurnValidity(boolean turn){
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        if (turn){</span>
+<span class="fc" id="L115">            return true;</span>
+        }else{
+<span class="fc" id="L117">            return false;</span>
+        }
+    }
+
+    public boolean moveValidityCheck(boolean turn){
+<span class="fc bfc" id="L122" title="All 4 branches covered.">        if(this.moveContentValidity() &amp;&amp; this.playerTurnValidity(turn)){</span>
+<span class="fc" id="L123">            return true;</span>
+        }else{
+<span class="fc" id="L125">            return false;</span>
+        }
+
+    }
+
+    public void completeMove(int CupNumber, int playerside, boolean turn){
+<span class="fc" id="L131">        Cup cupToMakeAMove = this.getCup(CupNumber);</span>
+<span class="fc" id="L132">        int content = cupToMakeAMove.getStones();</span>
+<span class="fc" id="L133">        boolean validitycheck = cupToMakeAMove.moveValidityCheck(turn);</span>
+<span class="fc bfc" id="L134" title="All 2 branches covered.">        if (validitycheck){</span>
+<span class="fc" id="L135">            cupToMakeAMove.passStonesToNeighbor();</span>
+<span class="fc" id="L136">            cupToMakeAMove.emptySelf();</span>
+<span class="fc bfc" id="L137" title="All 2 branches covered.">            for (int i = 0; i &lt;= content ; content--){</span>
+<span class="fc" id="L138">                cupToMakeAMove.tellNeighborToTakeAndPassFloat(playerside);</span>
+<span class="fc" id="L139">                cupToMakeAMove = cupToMakeAMove.neighbor;</span>
+            }         
+        }
+<span class="fc" id="L142">    }</span>
+
+    public void tellNeighborToTakeAndPassFloat(int playerside){
+<span class="fc" id="L145">        this.neighbor.takeFromFloat(playerside);</span>
+<span class="fc" id="L146">        this.neighbor.passFloatThrough();</span>
+<span class="fc" id="L147">    }</span>
+
+    public boolean opponentCheck(int playerside){
+<span class="fc bfc" id="L150" title="All 2 branches covered.">        if (this.player == playerside){</span>
+<span class="fc" id="L151">            return false;</span>
+        }else{
+<span class="fc" id="L153">            return true;</span>
+        }
+    }
+
+    public void stealFromOppositeNeighbor(){
+<span class="fc" id="L158">        int opponentstones = this.oppositeneighbor.getStones();</span>
+<span class="fc" id="L159">        this.stones += opponentstones;</span>
+<span class="fc" id="L160">        this.oppositeneighbor.youGotStolen();</span>
+<span class="fc" id="L161">    }</span>
+
+    public void youGotStolen(){
+<span class="fc" id="L164">        this.emptySelf();</span>
+<span class="fc" id="L165">    }</span>
+
+    public boolean didILandOnAKalaha(){
+<span class="fc" id="L168">        return landedupon;</span>
+    }
+
+    public void resetLandStatus(){
+<span class="fc" id="L172">        landedupon = false;</span>
+<span class="fc" id="L173">    }</span>
+
+    public boolean checkWhetherAllOwnNeighborsAreEmpty(int playerside){
+        Cup cuptocheck;
+<span class="fc" id="L177">        int cupschecked = 0;</span>
+<span class="fc" id="L178">        int totalcups = 6;</span>
+<span class="fc" id="L179">        cuptocheck = this.neighbor;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        while(cupschecked &lt;= totalcups){</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">            if (cuptocheck.getPlayer() == playerside){</span>
+<span class="fc bfc" id="L182" title="All 2 branches covered.">                if (cuptocheck.checkWhetherIAmEmpty()){</span>
+<span class="fc" id="L183">                    cupschecked++;</span>
+                }else{
+<span class="fc" id="L185">                    return false;</span>
+                }
+<span class="fc" id="L187">                cuptocheck = cuptocheck.neighbor;</span>
+            }else{
+<span class="fc" id="L189">                cuptocheck = cuptocheck.neighbor;</span>
+            }
+        }
+<span class="fc" id="L192">        return true;   </span>
+    }
+
+    public boolean checkWhetherIAmEmpty(){
+<span class="fc bfc" id="L196" title="All 2 branches covered.">        if(this.stones == 0){</span>
+<span class="fc" id="L197">            return true;</span>
+        }else{
+<span class="fc" id="L199">            return false;</span>
+        }
+    }
+
+    public Cup getKalaha(){
+<span class="fc" id="L204">        return this.getCup(6);</span>
+    }
+
+    public int kalahaEndContent(){
+<span class="fc" id="L208">        return this.getKalaha().getStones();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

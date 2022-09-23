@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MancalaGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">domain</a> &gt; <a href="index.source.html" class="el_package">mancala.domain</a> &gt; <span class="el_source">MancalaGame.java</span></div><h1>MancalaGame.java</h1><pre class="source lang-java linenums">package mancala.domain;
+
+public class MancalaGame implements Playable{
+    String nameOfPlayer1;
+    String nameOfPlayer2;
+<span class="nc" id="L6">    Player player1 = new Player(1);</span>
+<span class="nc" id="L7">    Player player2 = new Player(2);</span>
+
+<span class="nc" id="L9">    public MancalaGame(String name1, String name2){</span>
+<span class="nc" id="L10">        this.nameOfPlayer1 = name1;</span>
+<span class="nc" id="L11">        this.nameOfPlayer2 = name2;</span>
+<span class="nc" id="L12">        this.player1.startAGameAgainst(player2);</span>
+<span class="nc" id="L13">    }</span>
+
+    public String getNameOfPlayerOne(){
+<span class="nc" id="L16">        return this.nameOfPlayer1;</span>
+    };
+
+    public String getNameOfPlayerTwo(){
+<span class="nc" id="L20">        return this.nameOfPlayer2;</span>
+    };
+
+    public boolean isPlayersTurn(String name){
+        boolean turnCheck;
+<span class="nc" id="L25">        Player playerToCheck = playerCheck(name);</span>
+<span class="nc" id="L26">        turnCheck = playerToCheck.getTurn();</span>
+<span class="nc" id="L27">        return turnCheck;</span>
+    };
+
+    public int[] playPit(int index){
+<span class="nc" id="L31">        int gameState[] = new int[15];</span>
+<span class="nc" id="L32">        gameState = gameStateCheck(gameState);</span>
+<span class="nc bnc" id="L33" title="All 2 branches missed.">        if (index &lt;= 5){</span>
+<span class="nc" id="L34">            player1.makeAMoveOnCup(index);</span>
+<span class="nc bnc" id="L35" title="All 4 branches missed.">        }else if (index &gt; 6 &amp;&amp; index &lt; 13){</span>
+<span class="nc" id="L36">            int player2Cup = index - 7;</span>
+<span class="nc" id="L37">            player2.makeAMoveOnCup(player2Cup);</span>
+        }
+<span class="nc" id="L39">        return gameState;</span>
+    };
+
+    public int getStonesForPit(int index){
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (index &lt;= 6){</span>
+<span class="nc" id="L44">            int stones = player1.board.getCup(index).getStones();</span>
+<span class="nc" id="L45">            return stones;</span>
+        }else{
+<span class="nc" id="L47">            int player2Cup = index - 7;</span>
+<span class="nc" id="L48">            int stones = player2.board.getCup(player2Cup).getStones();</span>
+<span class="nc" id="L49">            return stones;</span>
+        }
+    };
+
+    public boolean isEndOfGame(){
+<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (player1.board.checkWhetherAllOwnNeighborsAreEmpty(1) || </span>
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        player2.board.checkWhetherAllOwnNeighborsAreEmpty(2)){</span>
+<span class="nc" id="L56">            return true;</span>
+        }else{
+<span class="nc" id="L58">            return false;</span>
+        }
+    };
+
+    public Winner getWinner(){
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        if (isEndOfGame()){</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">            if (player1.didIWinBoolean()){</span>
+<span class="nc" id="L65">                return Playable.Winner.PLAYER_1;</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            }else if(player2.didIWinBoolean()){</span>
+<span class="nc" id="L67">                return Playable.Winner.PLAYER_2;</span>
+            }else{
+<span class="nc" id="L69">                return Playable.Winner.DRAW;</span>
+            }
+        }else{
+<span class="nc" id="L72">            return Playable.Winner.NO_ONE;</span>
+        }
+    };
+
+    private Player playerCheck(String name){
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (name.equals(nameOfPlayer1)){</span>
+<span class="nc" id="L78">            return player1;</span>
+        }else{
+<span class="nc" id="L80">            return player2;</span>
+        }
+    }
+
+    private int[] gameStateCheck(int[] gameStateArray){
+<span class="nc" id="L85">        gameStateArray = fillPlayer1GameStateArray(gameStateArray);</span>
+<span class="nc" id="L86">        gameStateArray[6] = player1.board.getKalaha().getStones();</span>
+<span class="nc" id="L87">        gameStateArray = fillPlayer2GameStateArray(gameStateArray);</span>
+<span class="nc" id="L88">        gameStateArray[13]= player2.board.getKalaha().getStones();</span>
+<span class="nc" id="L89">        gameStateArray[14]= gameStatePlayerTurnCheck();</span>
+<span class="nc" id="L90">        return gameStateArray;</span>
+    }
+
+    private int gameStatePlayerTurnCheck(){
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (player1.getTurn()){</span>
+<span class="nc" id="L95">            return 2;</span>
+        }else{
+<span class="nc" id="L97">            return 1;</span>
+        }
+    }
+
+    private int[] fillPlayer1GameStateArray(int [] gameStateArray){
+<span class="nc" id="L102">        int[] player1BoardState = getPlayer1BoardState();</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        for (int i = 0; i &lt; player1BoardState.length; i++){</span>
+<span class="nc" id="L104">            gameStateArray[i] = player1BoardState[i];</span>
+        }
+<span class="nc" id="L106">        return gameStateArray;</span>
+    }
+
+    private int[] fillPlayer2GameStateArray(int [] gameStateArray){
+<span class="nc" id="L110">        int[] player2BoardState = getPlayer2BoardState();</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">        for (int i = 0; i &lt; player2BoardState.length; i++){</span>
+<span class="nc" id="L112">            int tempArrayIndex = i + 7;</span>
+<span class="nc" id="L113">            gameStateArray[tempArrayIndex] = player2BoardState[i];</span>
+        }
+<span class="nc" id="L115">        return gameStateArray;</span>
+    }
+
+    private int[] getPlayer1BoardState(){
+<span class="nc" id="L119">        int[] player1BoardState = new int[6];</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        for (int i = 0; i &lt; player1BoardState.length; i++){</span>
+<span class="nc" id="L121">            player1BoardState[i] = player1.board.getCup(i).getStones();</span>
+        }
+<span class="nc" id="L123">        return player1BoardState;</span>
+    }
+
+    private int[] getPlayer2BoardState(){
+<span class="nc" id="L127">        int[] player2BoardState = new int[6];</span>
+<span class="nc bnc" id="L128" title="All 2 branches missed.">        for (int i = 0; i &lt; player2BoardState.length; i++){</span>
+<span class="nc" id="L129">            player2BoardState[i] = player2.board.getCup(i).getStones();</span>
+        }
+<span class="nc" id="L131">        return player2BoardState;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
