@@ -1,8 +1,0 @@
-GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-domain,mancala.domain,Playable.Winner,27,0,0,0,5,0,1,0,1,0
-domain,mancala.domain,Player,18,172,3,15,5,53,3,19,1,12
-domain,mancala.domain,Foo,0,5,0,0,0,2,0,2,0,2
-domain,mancala.domain,Kalaha,1,52,0,6,1,17,1,8,1,5
-domain,mancala.domain,NormalCup,5,90,1,7,2,31,2,9,1,6
-domain,mancala.domain,Cup,9,292,1,37,3,97,2,47,1,29
-domain,mancala.domain,MancalaGame,270,0,30,0,66,0,30,0,15,0
